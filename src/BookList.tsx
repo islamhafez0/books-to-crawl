@@ -13,7 +13,7 @@ const BookList = ({
 }: {
   books: Book[];
   loading: boolean;
-  error: string;
+  error: string | null;
   currentPage: number;
   totalPages: number | null;
   getNextPage: () => void;
@@ -21,19 +21,21 @@ const BookList = ({
 }) => {
   if (loading) {
     return "Loading...";
-  } else if (error) {
+  }
+  if (error) {
     return <p className="text-center error">{error}</p>;
   }
-  const randomizedBooks = books.sort(() => Math.random() - 0.5);
+
+  const randomizedBooks = books?.sort(() => Math.random() - 0.5);
   return (
     <div className="books_container">
       {!loading && !error && <Breadcrumb />}
       <ul className="container">
-        {randomizedBooks.map((book) => (
+        {randomizedBooks?.map((book) => (
           <BookCard key={book.id} book={book} />
         ))}
       </ul>
-      {!loading && books.length > 0 && (
+      {!loading && books?.length > 0 && (
         <>
           <div className="pagination">
             <button

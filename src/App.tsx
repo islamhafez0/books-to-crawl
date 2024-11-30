@@ -8,17 +8,18 @@ import BookDetails from "./BookDetails";
 const App = () => {
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
   const [totalPages, setTotalPages] = useState<number | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1", 10);
   const perPage = 20;
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   useEffect(() => {
     const getData = async () => {
       try {
         setLoading(true);
-        const base_url = `http://127.0.0.1:5000/api/books?page=${page}&per_page=${perPage}`;
-        const { data } = await axios.get(base_url);
+        const endpoint = `${API_BASE_URL}?page=${page}&per_page=${perPage}`;
+        const { data } = await axios.get(endpoint);
         if (data) {
           setBooks(data.books);
           setTotalPages(data.total_pages);
