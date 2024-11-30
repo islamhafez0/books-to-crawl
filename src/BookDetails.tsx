@@ -15,7 +15,7 @@ const BookDetails = () => {
       try {
         setLoading(true);
         const { data } = await axios.get(
-          `http://127.0.0.1:5000/api/books/${id}`
+          `${import.meta.env.VITE_API_BASE_URL}/${id}`
         );
         if (data) {
           setBook(data);
