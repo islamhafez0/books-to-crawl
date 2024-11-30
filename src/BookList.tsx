@@ -24,11 +24,12 @@ const BookList = ({
   } else if (error) {
     return <p className="text-center error">{error}</p>;
   }
+  const randomizedBooks = books.sort(() => Math.random() - 0.5);
   return (
     <div className="books_container">
       {!loading && !error && <Breadcrumb />}
       <ul className="container">
-        {books.map((book) => (
+        {randomizedBooks.map((book) => (
           <BookCard key={book.id} book={book} />
         ))}
       </ul>
